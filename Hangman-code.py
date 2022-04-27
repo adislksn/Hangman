@@ -7,6 +7,9 @@ import random as rand
 pygame.init()
 logo = pygame.image.load("assets/hangman6.png")
 pygame.display.set_icon(logo)
+music = pygame.mixer.music.load("assets/AWM.mp3")
+pygame.mixer.music.play(-1)
+click = pygame.mixer.Sound("assets/click.wav")
 width = 800
 height = 500
 display = pygame.display.set_mode((width, height))
@@ -38,15 +41,12 @@ for i in range(7):
 
 #assets
 list_text=(['AYAM','KUCING','BERUANG','BADAK','HARIMAU','KELINCI','KEPITING'],['APEL','PISANG','KENTANG','DAGING','JERUK','COKELAT','KUE'],['YOUTUBER','PROGRAMMER','POLISI','DOKTER','PILOT','CHEF','DRIVER'])
-quest1 = rand.choice(list_text[0])
-quest2 = rand.choice(list_text[1])
-quest3 = rand.choice(list_text[2])
 stats = 0
 terjawab=[]
 
 class Hangman:
     global quest
-    quest = quest3
+    quest = rand.choice(list_text[rand.randint(0,2)])
     def __init__(self,nama):
         self.nama = nama
 
@@ -101,6 +101,7 @@ class Hangman:
                     Hangman.close()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     pos_x, pos_y = pygame.mouse.get_pos()
+                    click.play()
                     for teks in alfabet:
                         x, y, txt, status = teks
                         if status:
@@ -118,16 +119,16 @@ class Hangman:
                 if teks not in terjawab:
                     game = False
                     break
-
+            
             if game:
-                Hangman.tampilan_out("You Won")
+                Hangman.tampilan_out(self,"You Won")
                 break
             if stats == 6:
-                Hangman.tampilan_out("You Lost")
+                Hangman.tampilan_out(self,"You Lost")
                 break
 
 class Animal(Hangman):
-    quest = quest1
+    quest = rand.choice(list_text[1])
     def __init__(self,nama):
         super().__init__(nama)
 
@@ -141,7 +142,7 @@ class Animal(Hangman):
         super().utama()
 
 class Food(Hangman):
-    quest = quest2
+    quest = rand.choice(list_text[2])
     def __init__(self,nama):
         super().__init__(nama)
 
@@ -155,7 +156,7 @@ class Food(Hangman):
         super().utama()
 
 class Jobs(Hangman):
-    quest = quest3
+    quest = rand.choice(list_text[0])
     def __init__(self,nama):
         super().__init__(nama)
 
