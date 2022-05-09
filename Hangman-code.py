@@ -35,8 +35,10 @@ for i in range(26):
 
 #images
 images=[]
+DEFAULT_IMAGE_SIZE = (250,253)
 for i in range(7):
     image = pygame.image.load(f"assets/hangman{str(i)}.png")
+    image = pygame.transform.scale(image, DEFAULT_IMAGE_SIZE)
     images.append(image)
 
 #assets
