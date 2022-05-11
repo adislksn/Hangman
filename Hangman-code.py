@@ -2,6 +2,7 @@ from pygame import *
 import pygame 
 import math
 import random as rand
+from abc import ABC, abstractmethod 
 
 #display & music settings
 pygame.init()
@@ -47,8 +48,8 @@ stats = 0
 answered=[]
 
 #parent class
-class Hangman:
-    global quest #variabel quest bermasalah, blm fix
+class Hangman(ABC):
+    global quest
     quest = rand.choice(list_text[rand.randint(0,2)])
     def __init__(self,name):
         self.name = name
@@ -96,8 +97,10 @@ class Hangman:
         pygame.display.update()
 
     #main program
+    @abstractmethod
     def main_p(self):
         global stats
+        global alphabet
         while True:
             clock.tick(60)
             for event in pygame.event.get():
@@ -119,7 +122,7 @@ class Hangman:
             Hangman.show()
 
             game = True
-            for check in alphabet:
+            for check in quest:
                 if check not in answered:
                     game = False
                     break
