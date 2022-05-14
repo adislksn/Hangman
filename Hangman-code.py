@@ -223,6 +223,7 @@ def Intro():
 
 def Clue():
     display.fill(background)
+    clue_image=pygame.image.load("assets/clue.png")
     clue_check = True
     xvar=50
     yvar=425
@@ -245,6 +246,9 @@ def Clue():
 
             Back = base_font.render("Back", 1, (0,0,0))
             display.blit(Back, (xvar, yvar))
+
+            display.blit(clue_image, (100,100))
+            pygame.display.update()
 
         pygame.display.update()
 
