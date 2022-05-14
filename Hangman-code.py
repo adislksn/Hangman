@@ -63,6 +63,8 @@ class Hangman(ABC):
         display.fill(background)
         text = base_font.render(word, 1, (0,0,0))
         display.blit(text, (width/2 - text.get_width()/2, height/2 - text.get_height()/2))
+        text_out = base_font.render(f"Anwer : {quest}", 1, (0,0,0))
+        display.blit(text_out, (width/2 - text_out.get_width()/2, (height/2 - text_out.get_height()/2)+45))
         pygame.display.update()
         pygame.time.delay(3000)
         Hangman.close()
