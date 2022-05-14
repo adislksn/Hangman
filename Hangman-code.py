@@ -16,6 +16,7 @@ height = 500
 display = pygame.display.set_mode((width, height))
 background = (255,255,255)
 base_font = pygame.font.SysFont("comicsans",32)
+tittle_font = pygame.font.SysFont("dejavuserif",40)
 clock = pygame.time.Clock()
 pygame.display.set_caption("Hangman")
 
@@ -176,8 +177,40 @@ class Jobs(Hangman):
     def main_p(self):
         super().main_p()
         
-display.fill(background)
-pygame.display.update()
+def Intro():
+    display.fill(background)
+    intro_check = True
+    xvar=400
+    yvar=250
+    cot=0
+    while intro_check:
+        clock.tick(60)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                Hangman.close()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                xpos, ypos = pygame.mouse.get_pos()
+                click.play()
+                cot+=1
+                cek = math.sqrt((xvar - xpos)**2 + (yvar - ypos)**2)
+                if cek <= radius+40:
+                    intro_check = False
+                if cot > 6:
+                    cot=0
+                    display.fill(background)
+
+            text = tittle_font.render("Welcome to Hangman Game", 1, (0,0,0))
+            display.blit(text, (width/2 - text.get_width()/2, 20))
+
+            text = base_font.render("START", 1, (0,0,0))
+            display.blit(text, (width/2 - text.get_width()/2, yvar-20))
+            
+            pygame.draw.circle(display, (0,0,0), (xvar,yvar), radius+40,6)
+            display.blit(images[cot], (150,100))
+        pygame.display.update()
+
+Intro()
+pygame.time.delay(500)
 play = "Player 1 "
 player=Food(play)
 player.main_p()
