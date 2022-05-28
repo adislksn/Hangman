@@ -1,3 +1,4 @@
+from ast import Return
 from pygame import *
 import pygame 
 import math
@@ -73,13 +74,9 @@ class Hangman(ABC):
         display.fill(background)
 
         #draw title
-        text = tittle_font.render("Hangman Game", 1, (0,0,0))
+        text = base_font.render("Hangman Game", 1, (0,0,0))
         display.blit(text, (width/2 - text.get_width()/2, 20))
         
-        #draw topic
-        topic = base_font.render(f"Topic : {tpc}", 1, (0,0,0))
-        display.blit(topic, (width/2 - topic.get_width()/2, 50))
-
         #draw words
         show_alphabet = ""
         for check in quest:
@@ -141,6 +138,7 @@ class Hangman(ABC):
                 break
 
 class Animal(Hangman):
+    quest = rand.choice(list_text[0])
     def __init__(self,name):
         super().__init__(name)
     
@@ -154,6 +152,7 @@ class Animal(Hangman):
         super().main_p()
 
 class Food(Hangman):
+    quest = rand.choice(list_text[1])
     def __init__(self,name):
         super().__init__(name)
 
@@ -167,6 +166,7 @@ class Food(Hangman):
         super().main_p()
 
 class Jobs(Hangman):
+    quest = rand.choice(list_text[2])
     def __init__(self,name):
         super().__init__(name)
 
@@ -201,11 +201,12 @@ def Intro():
                 if cek_clue <= radius+27:
                     Clue()
                     intro_check = False
-                elif cek <= radius+50:
+                elif cek <= radius+40:
                     intro_check = False
                 if cot > 6:
                     cot=0
                     display.fill(background)
+            pygame.display.update()
 
             text = tittle_font.render("Welcome to Hangman Game", 1, (0,0,0))
             display.blit(text, (width/2 - text.get_width()/2, 20))
@@ -213,11 +214,11 @@ def Intro():
             text = base_font.render("START", 1, (0,0,0))
             display.blit(text, (width/2 - text.get_width()/2, yvar-20))
             
-            pygame.draw.circle(display, (0,0,0), (xvar,yvar), radius+50,6)
+            pygame.draw.circle(display, (0,0,0), (xvar,yvar), radius+40,6)
             display.blit(images[cot], (150,100))
 
             clue = base_font.render("Clue", 1, (0,0,0))
-            display.blit(clue, (xclue-30, yclue-25))
+            display.blit(clue, (xclue-27, yclue-20))
 
             pygame.draw.circle(display, (0,0,0), (xclue,yclue), radius+30,6)
 
@@ -225,7 +226,6 @@ def Intro():
 
 def Clue():
     display.fill(background)
-    clue_image=pygame.image.load("assets/clue.png")
     clue_check = True
     xvar=50
     yvar=425
@@ -242,28 +242,17 @@ def Clue():
                     clue_check = False
                     Intro()
                     return False
-            
             Clue = tittle_font.render("Clue List", 1, (0,0,0))
             display.blit(Clue, (width/2 - Clue.get_width()/2, 20))
 
             Back = base_font.render("Back", 1, (0,0,0))
             display.blit(Back, (xvar, yvar))
 
-            display.blit(clue_image, (100,100))
-            pygame.display.update()
-
         pygame.display.update()
 
 Intro()
 pygame.time.delay(500)
-quest_rand=rand.randint(0,2)
-quest = rand.choice(list_text[quest_rand])
-if quest_rand == 0:
-    tpc = "Animal"
-elif quest_rand == 1:
-    tpc = "Food"
-elif quest_rand == 2:
-    tpc = "Jobs"
+quest = rand.choice(list_text[rand.randint(0,2)])
 play = "Player 1 "
 player=Food(play)
 player.main_p()
