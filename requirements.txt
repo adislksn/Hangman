@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    environment:
+      DISPLAY: 114.125.58.203 #this using format DISPLAY: HOST IP:0, so check ur ip  address
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - .:/usr/src/app
