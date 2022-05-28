@@ -75,6 +75,10 @@ class Hangman(ABC):
         #draw title
         text = base_font.render("Hangman Game", 1, (0,0,0))
         display.blit(text, (width/2 - text.get_width()/2, 20))
+
+        #draw topic
+        topic = base_font.render(f"Topic : {tpc}", 1, (0,0,0))
+        display.blit(topic, (width/2 - topic.get_width()/2, 50))
         
         #draw words
         show_alphabet = ""
@@ -225,6 +229,7 @@ def Intro():
 
 def Clue():
     display.fill(background)
+    clue_image=pygame.image.load("assets/clue.png")
     clue_check = True
     xvar=50
     yvar=425
@@ -247,11 +252,21 @@ def Clue():
             Back = base_font.render("Back", 1, (0,0,0))
             display.blit(Back, (xvar, yvar))
 
+            display.blit(clue_image, (100,100))
+            pygame.display.update()
+
         pygame.display.update()
 
 Intro()
 pygame.time.delay(500)
-quest = rand.choice(list_text[rand.randint(0,2)])
+quest_rand=rand.randint(0,2)
+quest = rand.choice(list_text[quest_rand])
+if quest_rand == 0:
+    tpc = "Animal"
+elif quest_rand == 1:
+    tpc = "Food"
+elif quest_rand == 2:
+    tpc = "Jobs"
 play = "Player 1 "
 player=Food(play)
 player.main_p()
