@@ -61,10 +61,14 @@ class Hangman(ABC):
         self.word = word
         pygame.time.delay(1000)
         display.fill(background)
+        win_image = pygame.image.load("assets/winman.png")
+        win_image = pygame.transform.scale(win_image, DEFAULT_IMAGE_SIZE)
+        if self.word == "You Won":
+            display.blit(win_image, (280,50))
         text = base_font.render(word, 1, (0,0,0))
-        display.blit(text, (width/2 - text.get_width()/2, height/2 - text.get_height()/2))
+        display.blit(text, (width/2 - text.get_width()/2, (height/2 - text.get_height()/2)+30))
         text_out = base_font.render(f"Answer : {quest}", 1, (0,0,0))
-        display.blit(text_out, (width/2 - text_out.get_width()/2, (height/2 - text_out.get_height()/2)+45))
+        display.blit(text_out, (width/2 - text_out.get_width()/2, (height/2 - text_out.get_height()/2)+60))
         pygame.display.update()
         pygame.time.delay(3000)
         Hangman.close()
